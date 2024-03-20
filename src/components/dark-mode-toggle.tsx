@@ -3,22 +3,62 @@ import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import { useState, useEffect, useMemo } from "react";
+import { useAnimate } from "framer-motion";
+
+import { motion } from "framer-motion";
 
 export function DarkModeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [scope, animate] = useAnimate();
 
-  const toggleTheme = () => {
-    if (resolvedTheme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleThemeChange = async (newTheme: "dark" | "light") => {
+    setTheme(newTheme);
+    await animate([
+      newTheme === "light"
+        ? [scope.current, { rotate: -120 }]
+        : [scope.current, { rotate: 0 }],
+    ]);
   };
 
+  //   const toggleTheme = () => {
+  //     if (resolvedTheme === "dark") {
+  //       setTheme("light");
+  //     } else {
+  //       setTheme("dark");
+  //     }
+  //   };
+
   return (
-    <Button variant="outline" size="icon" onClick={toggleTheme}>
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-    </Button>
+    <div className="w-10 h-10 flex items-center justify-center">
+      {theme !== "dark" ? (
+        <motion.div
+          initial={{ opacity: 0, rotate: -120 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.05 }}
+          className="text-black hover:text-text-light dark:hover:text-text-green duration-300"
+        >
+          <button ref={scope} onClick={() => handleThemeChange("dark")}>
+            <Sun size="25" />
+          </button>
+        </motion.div>
+      ) : (
+        <motion.div
+          initial={{ opacity: 0, rotate: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.05 }}
+          className="text-white hover:text-text-light dark:hover:text-text-green duration-300"
+        >
+          <button ref={scope} onClick={() => handleThemeChange("light")}>
+            <Moon size="25" />
+          </button>
+        </motion.div>
+      )}
+    </div>
   );
 }

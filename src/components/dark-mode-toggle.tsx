@@ -16,49 +16,26 @@ export function DarkModeToggle() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
+  if (!mounted) {
+    return <></>;
+  }
   const handleThemeChange = async (newTheme: "dark" | "light") => {
     setTheme(newTheme);
-    await animate([
-      newTheme === "light"
-        ? [scope.current, { rotate: -120 }]
-        : [scope.current, { rotate: 0 }],
-    ]);
   };
-
-  //   const toggleTheme = () => {
-  //     if (resolvedTheme === "dark") {
-  //       setTheme("light");
-  //     } else {
-  //       setTheme("dark");
-  //     }
-  //   };
 
   return (
     <div className="w-10 h-10 flex items-center justify-center">
-      {theme !== "dark" ? (
-        <motion.div
-          initial={{ opacity: 0, rotate: -120 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.05 }}
-          className="text-black hover:text-text-light dark:hover:text-text-green duration-300"
-        >
-          <button ref={scope} onClick={() => handleThemeChange("dark")}>
-            <Sun size="25" />
-          </button>
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0, rotate: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.05 }}
-          className="text-white hover:text-text-light dark:hover:text-text-green duration-300"
-        >
-          <button ref={scope} onClick={() => handleThemeChange("light")}>
-            <Moon size="25" />
-          </button>
-        </motion.div>
-      )}
+      <motion.div
+        initial={{ opacity: 0, rotate: theme === "dark" ? 0 : -120 }}
+        animate={{ opacity: 1, rotate: theme === "dark" ? 0 : -120 }}
+        transition={{ delay: 0.05 }}
+        className={`text-${
+          theme === "dark" ? "white" : "black"
+        } hover:text-text-light dark:hover:text-text-green duration-300`}
+        onClick={() => handleThemeChange(theme === "dark" ? "light" : "dark")}
+      >
+        {theme === "dark" ? <Moon size="25" /> : <Sun size="25" />}
+      </motion.div>
     </div>
   );
 }

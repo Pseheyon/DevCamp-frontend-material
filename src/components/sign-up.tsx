@@ -222,9 +222,7 @@ export default function SignUpFrom() {
               )}
 
               <CardFooter
-                className={
-                  "flex gap-2 size-full w-100 p-0 pt-4 justify-between"
-                }
+                className={"flex gap-3 size-full p-0 pt-4 justify-between "}
               >
                 <Button
                   className={cn({ hidden: step === 0 })}
@@ -238,7 +236,6 @@ export default function SignUpFrom() {
                 </Button>
                 <Button
                   type="button"
-                  size={"lg"}
                   className={cn({ hidden: step === 1 })}
                   onClick={() => {
                     form.trigger(["phone", "email", "username", "role"]);
@@ -258,9 +255,9 @@ export default function SignUpFrom() {
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
                 <Button
-                  size={"lg"}
                   type="button"
-                  variant={"default"}
+                  variant={"secondary"}
+                  size={"lg"}
                   className={cn({ hidden: step === 0 })}
                   onClick={() => {
                     setStep(0);

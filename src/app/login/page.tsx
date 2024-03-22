@@ -54,7 +54,7 @@ export default function LoginForm() {
 
   const onSubmit = async (data: TsLoginSchemaType) => {
     alert(JSON.stringify(data, null, 4));
-    const response = await fetch("/api/login", {
+    const response = await fetch("/pages/api/login", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -63,12 +63,14 @@ export default function LoginForm() {
     });
     const responseData = await response.json();
     if (!response.ok) {
-      alert("Submitting form failed!");
+      alert("아이디 또는 비밀번호가 틀렸습니다.");
       return;
     }
 
     if (responseData.errors) {
       const errors = responseData.errors;
+      alert("사용자 정보가 없습니다.");
+      return;
     }
     if (response.ok) {
       alert("로그인에 성공했습니다!");

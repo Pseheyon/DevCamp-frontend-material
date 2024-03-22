@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { DarkModeToggle } from "@/components/dark-mode-toggle";
+import Header from "@/components/header";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Header />
+          <div className="flex min-h-screen flex-col items-center p-24">
+            {/* <SignUpFrom /> */}
+            <DarkModeToggle />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>

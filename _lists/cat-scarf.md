@@ -1,10 +1,10 @@
 ## T
 
-title: "캣타워"
-excerpt: "친환경 소재로 무너지지않는 최고의 갓성비 제품!"
+title: "깜직한 고양이 니트 스카프"
+description : "봄날고양이로 니트 스카프로 귀여운 추억을 남기세요!"
 coverImage: "https://github.com/Pseheyon/DevCamp-frontend-material/tree/main/public/images/cat-tower1.webp"
 date: "2020-03-16T05:35:07.322Z"
-author:
+author:"cat Shop Onner"
 name: cat Shop Onner
 picture: "https://github.com/Pseheyon/DevCamp-frontend-material/tree/main/public/images/cat-scarf1.webp"
 ogImage:

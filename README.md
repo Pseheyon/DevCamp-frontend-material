@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 🚀 "E-Commerce" - dev camp
 
-## Getting Started
+<br/>
 
-First, run the development server:
+### 🌟 프로젝트 소개
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+이 프로젝트는 Next.js를 사용하여 Shacdn/UI, Zod, React Hook Form, 그리고 Resolvers 라이브러리를 활용하여 간단한 회원가입 페이지와 로그인 페이지를 개발하는 것을 목표로 합니다.
+추가로 노션 api or shopify development store 사용하여 제품을 가져올 수 있게 합니다.
+그리고 공식문서 vercel / commerce를 활용하여 제작 합니다
+<br/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🛠️ 기술 스택
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<div>Next.js
+Shacdn/UI
+Zod
+React Hook Form
+Resolvers TypeScript vercel </div>
+<br/>
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 👥 개발자
 
-## Learn More
+| 이름   | 역할                 |
+| ------ | -------------------- |
+| 박세현 | **Frontend (React)** |
 
-To learn more about Next.js, take a look at the following resources:
+### 📄 목적
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### week1
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+##### 로그인/회원가입 기능
 
-## Deploy on Vercel
+<div>Shacdn을 활용한 UI 디자인</div>
+<div>- Shacdn을 사용하여 로그인 페이지의 UI를 디자인
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+<div>Zod를 이용한 입력 유효성 검사</div>
+<div> - Zod를 사용하여 로그인 폼의 입력값을 검증 <br/>
+ - 유효하지 않은 입력에 대해 사용자에게 알림</div>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div>React Hook Form을 활용한 상태 관리</div>
+<div> - 폼의 상태를 관리<br/>
+ - 폼의 제출 및 유효성 검사와 관련된 로직을 간편하게 구현할 수 있습니다.</div>
+
+#### week2
+
+<div>장바구니, 결제페이지 개발, 배포
+Next.js, Shacdn/UI, Zod, React Hook Form, Resolvers, 토스페이먼츠 사용연습</div>
+
+##### 쿠폰 기능
+
+<div>쿠폰 종류</div>
+<div>1. 정액제 쿠폰</div>
+<div>고정된 금액으로 할인이 적용<br/>
+ex: '5천 원 할인쿠폰'</div>
+
+<div>2. 정률제 쿠폰</div>
+<div>결제 금액의 일정 비율로 할인이 적용<br/>
+ex: '30% 할인쿠폰'</div>
+
+##### CMS 상품리스트, 장바구니 구현
+
+<div>
+notion api or shopify로 api 관리<br/>
+ 공식문서 vercel / commerce를 활용하여 데이터를 불러오고 결제 전 단계 완료<br/></div>
+<br/>
+
+##### 결제 기능
+
+<div>
+토스페이먼츠를 사용하여 결제 기능을 구현<br/>
+사용자는 결제 수단을 선택하고, 적용된 쿠폰을 확인하며, <br/>
+최종 결제 금액을 확인<br/></div>
+<br/>

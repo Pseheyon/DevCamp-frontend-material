@@ -43,6 +43,16 @@ export default function Header() {
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
+        <MenubarMenu>
+          <MenubarTrigger>
+            <Link href="/cart">장바구니</Link>
+          </MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem>
+              장바구니 <MenubarShortcut>바로가기</MenubarShortcut>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
       </Menubar>
     </>
   );

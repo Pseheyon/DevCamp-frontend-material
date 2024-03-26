@@ -21,7 +21,6 @@ export const mockCartData: TsOrderSchemaType[] = [
       shippingType: "dor",
       recipient: "쫀덕이",
       recipientphone: "123-456-7890",
-      memo: "dor",
     },
     coupon: {
       couponPoint: 2000,
@@ -40,7 +39,6 @@ export const mockCartData: TsOrderSchemaType[] = [
       termsAndConditions: false,
       privacyPolicy: false,
     },
-    role: "admin",
   },
 ];
 

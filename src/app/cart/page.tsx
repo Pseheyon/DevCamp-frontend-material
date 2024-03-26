@@ -48,7 +48,6 @@ export default function Cart() {
     shippingType: cartData.shippingInfo.shippingType,
     recipient: cartData.shippingInfo.recipient,
     recipientphone: cartData.shippingInfo.recipientphone,
-    memo: cartData.shippingInfo.memo,
   });
   const [isUserEditMode, setUserEditMode] = useState(false);
   const [isShippingEditMode, setShippingEditMode] = useState(false);
@@ -72,7 +71,6 @@ export default function Cart() {
         shippingType: cartData?.shippingInfo.shippingType || "pa",
         recipient: cartData?.shippingInfo.recipient || "",
         recipientphone: cartData?.shippingInfo.recipientphone || "",
-        memo: cartData?.shippingInfo.memo || "",
       },
       coupon: {
         couponPoint: cartData?.coupon.couponPoint || 0,
@@ -92,7 +90,6 @@ export default function Cart() {
           cartData?.purchaseAgreement.termsAndConditions || true,
         privacyPolicy: cartData?.purchaseAgreement.privacyPolicy || true,
       },
-      role: "",
     },
   });
 

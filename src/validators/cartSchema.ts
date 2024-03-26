@@ -18,7 +18,6 @@ const shippingInfoSchema = z.object({
   shippingType: z.string().min(8, { message: "배송메모." }),
   recipient: z.string(),
   recipientphone: z.string(),
-  memo: z.string(),
 });
 
 const couponPointSchema = z.object({
@@ -69,7 +68,6 @@ export const orderSchema = z.object({
   paymentAmount: paymentAmountSchema,
   paymentMethod: paymentMethodSchema,
   purchaseAgreement: purchaseAgreementSchema,
-  role: z.string().min(2, { message: "역할을." }),
 });
 
 export type TsOrderSchemaType = z.infer<typeof orderSchema>;

@@ -78,11 +78,15 @@ const CouponPointUsedFrom: React.FC<Props> = ({
   };
 
   const handleUseAllPoints = () => {
+    if (!cartData.coupon || cartData.coupon.pointsUsed === undefined) {
+      // coupon이 없거나 pointsUsed가 정의되지 않은 경우 처리
+      return;
+    }
     const numericValue: number = cartData.coupon.pointsUsed;
     if (cartData.coupon.pointsUsed > (amoutQuantitypay || total)) {
       alert(`현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.`);
       return;
-    } else if (setIsResetButtonShown(false) || setIsButtonClicked(false)) {
+    } else if (!setIsResetButtonShown || !setIsButtonClicked) {
       setIsResetButtonShown(true);
       setIsButtonClicked(true);
     }

@@ -23,7 +23,7 @@ export const mockCartData: TsOrderSchemaType[] = [
       recipientphone: "123-456-7890",
     },
     coupon: {
-      couponPoint: 2000,
+      couponPoint: 6000,
       couponCode: "DISCOUNT123-20% 할인 쿠폰",
       pointsUsed: 6000,
     },

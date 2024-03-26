@@ -46,7 +46,7 @@ export function DarkModeToggle() {
           initial={{ opacity: 0, rotate: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.05 }}
-          className="text-white hover:text-text-light dark:hover:text-text-green duration-300"
+          className="hover:text-text-light dark:hover:text-text-green duration-300"
         >
           <button ref={scope} onClick={() => handleThemeChange("light")}>
             <Moon size="25" />

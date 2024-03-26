@@ -92,8 +92,8 @@ export default function SignUpFrom() {
   };
 
   return (
-    <div className="pt-40 box-border w-100">
-      <Card className="w-[380px]">
+    <div className="pt-40 box-border w-100 ">
+      <Card className="w-[380px] border-solid">
         <CardHeader className="pb-4 pt-8">
           <CardTitle>회원가입</CardTitle>
           <CardDescription>환영합니다!</CardDescription>

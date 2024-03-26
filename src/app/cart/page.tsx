@@ -33,7 +33,6 @@ import { date } from "zod";
 import CouponCodeFrom from "@/components/couponCode";
 import CouponPointFrom from "@/components/couponPoint";
 import CouponPointUsedFrom from "@/components/couponPointUsed";
-import { loadTossPayments } from "@tosspayments/payment-sdk";
 
 //type TsOrderSchemaType = z.infer<typeof orderSchema>;
 
@@ -250,52 +249,22 @@ export default function Cart() {
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
 
-  const onSubmit = async (data: any) => {
-    const tossPayments = await loadTossPayments(
-      process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
-    );
-    await tossPayments.requestPayment("카드", {
-      amount: amount,
-      orderId,
-      orderName: orderName,
-      successUrl: `${window.location.origin}/api/payments`,
-      failUrl: `${window.location.origin}/api/payments/fail`,
-    });
-  };
-  // const onSubmit = async (data: TsOrderSchemaType) => {
-  //   const response = await fetch("/api/cart", {
-  //     method: "POST",
-  //     body: JSON.stringify(data),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   alert(JSON.stringify(data, null, 4));
-
-  //   const responseData = await response.json();
-  //   if (!response.ok) {
-  //     alert("Submitting form failed!");
-  //     return;
-  //   }
-
-  //   if (responseData.errors) {
-  //     const errors = responseData.errors;
-  //   }
-  // };
+  const onSubmit = async (data: any) => {};
 
   let totaldis = Math.max(amoutQuantitypay - cartData.coupon.couponPoint, 0);
+
   return (
-    <main className="bg-slate-50 grid justify-center ">
+    <main className="grid justify-center ">
       <Form {...form}>
         <h3 className=" p-4 box-border text-center font-extrabold text-lg pb-8 ">
           결제하기
         </h3>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-4 justify-center justify-self-center gap-4 min-h-dvh rounded-none bg-slate-50  box-border w-[100%] "
+          className="grid grid-cols-4 justify-center justify-self-center gap-4 min-h-dvh rounded-none  box-border w-[100%] "
         >
-          <Card className=" col-span-3 rounded-none bg-inherit">
-            <Card className=" bg-white mt-4 boder rounded-none p-1 shadow-sm border">
+          <Card className=" col-span-3 rounded-none bg-inherit border-none">
+            <Card className=" mt-4 boder rounded-none p-1 shadow-sm border">
               <CardTitle className="p-4 ">주문 상품 정보</CardTitle>
               <CardContent className="flex flex-row  ">
                 <div>
@@ -390,24 +359,25 @@ export default function Cart() {
                       control={form.control}
                       name="paymentAmount.total"
                       render={({ field }) => (
-                        <FormItem className="basis-4/5">
+                        <FormItem className="basis-1/5">
                           <FormControl>
-                            <p
-                              className=" text-base text font-black "
-                              {...field}
-                            >
-                              반려묘 가격
-                              <span>{cartData.paymentAmount.total}</span>
-                            </p>
+                            <div className="flex justify-center self-stretch mt-1 text text-indigo-400 font-black text-xl">
+                              (수량)
+                              <span className=" box-border  text-center self-stretch text text-indigo-400 font-black text-xl">
+                                {cartData.productInfo.quantity}
+                              </span>
+                              <span>마리</span>
+                            </div>
                           </FormControl>
+                          <FormMessage />
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    <p className="text text-indigo-600 font-black text-xl">
+                    <p className="text flex text-indigo-400 font-black text-xl basis-1/5">
                       <span>{amoutQuantitypay}</span> 만원
                     </p>
-                    {/*구매 수량 + 버튼*/}
+                    {/* 구매 수량 + 버튼
                     <FormField
                       control={form.control}
                       name="productInfo.quantity"
@@ -450,12 +420,12 @@ export default function Cart() {
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className=" bg-white mt-4 boder rounded-none shadow-sm border">
+            <Card className=" mt-4 boder rounded-none shadow-sm border">
               <CardTitle className="p-4 pt-5  font-black">
                 주문자 정보
               </CardTitle>
@@ -572,7 +542,7 @@ export default function Cart() {
                 </div>
               </CardContent>
             </Card>
-            <Card className=" bg-white mt-4 boder rounded-none shadow-sm border ">
+            <Card className=" mt-4 boder rounded-none shadow-sm border ">
               <CardTitle className="p-4 pt-5 ">배송 정보</CardTitle>
               <CardContent className="flex flex-row w-full justify-between">
                 {/*배송자 명*/}
@@ -693,8 +663,8 @@ export default function Cart() {
                 control={form.control}
                 name="shippingInfo.shippingType"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="font-bold">배송 메모</FormLabel>
+                  <FormItem className="p-4">
+                    <FormLabel className="font-bold ">배송 메모</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       //defaultValue={field.value}
@@ -720,7 +690,7 @@ export default function Cart() {
                 control={form.control}
                 name="role"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="p-4">
                     <FormLabel>역할</FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -741,7 +711,7 @@ export default function Cart() {
                 )}
               />
             </Card>
-            <Card className=" bg-white mt-4 mb-8 boder rounded-none box-border shadow-sm border">
+            <Card className=" mt-4 mb-8 boder rounded-none box-border shadow-sm border">
               <CardTitle className="p-4 pt-5 ">쿠폰/포인트</CardTitle>
               <CardHeader className=" pb-2 pt-1 font-bold">쿠폰</CardHeader>
               <CardContent
@@ -817,7 +787,7 @@ export default function Cart() {
 
                   <Button
                     type="button"
-                    variant="deepnavy"
+                    variant="outline"
                     className="basis-1/5 text-center box-border rounded-[3px]"
                     onClick={handleUseDiscount}
                   >
@@ -838,8 +808,8 @@ export default function Cart() {
               </CardContent>
             </Card>
           </Card>
-          <Card className="col-span-1 rounded-none bg-inherit">
-            <Card className=" bg-white mt-4 boder rounded-none p-1 shadow-sm border">
+          <Card className="col-span-1 rounded-none bg-inherit border-none">
+            <Card className=" mt-4 boder rounded-none p-1 shadow-sm border">
               <CardTitle className="p-4 ">최종 결제 금액</CardTitle>
               <CardContent>
                 <div className="flex flex-row w-full justify-between">
@@ -903,7 +873,7 @@ export default function Cart() {
                   </h5>
                 </div>
               </CardContent>
-              <CardContent className=" bg-slate-50 w-full p-3 justify-items-center">
+              <CardContent className="  w-full p-3 justify-items-center">
                 <h6 className="flex items-center text-center">
                   <span className=" text-indigo-600 font-black">
                     {getPoint}
@@ -912,10 +882,10 @@ export default function Cart() {
                 </h6>
               </CardContent>
             </Card>
-            <Card className=" bg-white mt-4 boder rounded-none p-1 shadow-sm border">
+            <Card className=" mt-4 boder rounded-none p-1 shadow-sm border">
               <CardTitle className="p-4 ">결제 방법</CardTitle>
             </Card>
-            <Card className=" bg-white mt-4 boder rounded-none p-1 shadow-sm border">
+            <Card className=" mt-4 boder rounded-none p-1 shadow-sm border">
               <CardTitle className="p-4 ">최종 결제 금액</CardTitle>
               <CardContent>
                 <FormField
@@ -979,10 +949,7 @@ export default function Cart() {
                   name="paymentMethod.payment"
                   render={({ field }) => (
                     <FormItem>
-                      <Select
-                        onValueChange={field.onChange}
-                        //defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="은행을 선택해주세요" />
@@ -1037,7 +1004,7 @@ export default function Cart() {
                 </div>
               </CardContent>
             </Card>
-            <Card className=" bg-white mt-4 pb-4 boder rounded-none p-0 shadow-sm border">
+            <Card className=" mt-4 pb-4 boder rounded-none p-0 shadow-sm border">
               <CardContent className="pt-5">
                 <FormField
                   control={form.control}
@@ -1094,7 +1061,7 @@ export default function Cart() {
               </CardContent>
               <CardContent className="grid justify-items-center  bg-indigo-600 w-full p-3 justify-center text-center">
                 <Button
-                  className="flex items-center text-center text-white font-extrabold self-center w-full basis-full"
+                  className="bg-transparent"
                   type="submit"
                   onClick={onSubmit}
                 >

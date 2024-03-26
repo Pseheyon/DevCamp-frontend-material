@@ -68,7 +68,7 @@ export default function Cart() {
       },
       shippingInfo: {
         address: cartData?.shippingInfo.address || "",
-        shippingType: cartData?.shippingInfo.shippingType || "pa",
+        shippingType: cartData?.shippingInfo.shippingType || "",
         recipient: cartData?.shippingInfo.recipient || "",
         recipientphone: cartData?.shippingInfo.recipientphone || "",
       },
@@ -82,7 +82,7 @@ export default function Cart() {
         total: cartData?.paymentAmount.total || 0,
       },
       paymentMethod: {
-        payment: cartData?.paymentMethod.payment || "option-one",
+        payment: cartData?.paymentMethod.payment || "",
         depositor: cartData?.paymentMethod.depositor || "",
       },
       purchaseAgreement: {
@@ -155,9 +155,7 @@ export default function Cart() {
 
   //포인트사용
   const handlePointsUsedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const numericValue = isNaN(parseFloat(e.target.value))
-      ? e.target.value
-      : parseFloat(e.target.value);
+    const numericValue = parseFloat(e.target.value);
 
     const minPoints = 5000;
     const maxPoints = amoutQuantitypay; // 가용한 포인트 상한값
@@ -176,21 +174,6 @@ export default function Cart() {
     }));
   };
 
-  const handleUseAllPoints = () => {
-    const updatedtotal =
-      cartData.paymentAmount.total - cartData.coupon.couponPoint;
-    form.setValue("paymentAmount.total", updatedtotal);
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: updatedtotal,
-      },
-    }));
-
-    console.log("포인트 사용 확인", cartData.coupon.couponPoint);
-    alert(cartData.paymentAmount.total);
-  };
   // 쿠폰 코드에서 할인 퍼센트를 추출하는 함수
   const extractDiscountPercent = (code: string) => {
     const regex = /(\d{1,2})%/;
@@ -222,33 +205,12 @@ export default function Cart() {
     }));
   };
 
-  const handleUseDiscount = () => {
-    const numericValue = cartData.coupon.couponCode;
-    const percent = extractDiscountPercent(numericValue);
-    const maxPoints = amoutQuantitypay; // 가용한 포인트 상한값
-
-    const updatedtotal =
-      cartData.paymentAmount.total - maxPoints * (percent * 0.01);
-
-    form.setValue("paymentAmount.total", updatedtotal);
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: updatedtotal,
-      },
-    }));
-    console.log("쿠폰코드", cartData.coupon.couponCode);
-    alert(cartData.paymentAmount.total);
-  };
   const user = cartData.user.username;
   const amount = cartData.paymentAmount.total;
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
 
   const onSubmit = async (data: any) => {};
-
-  let totaldis = Math.max(amoutQuantitypay - cartData.coupon.couponPoint, 0);
 
   return (
     <main className="grid justify-center ">

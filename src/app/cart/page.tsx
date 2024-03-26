@@ -209,8 +209,15 @@ export default function Cart() {
   const amount = cartData.paymentAmount.total;
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
-
-  const onSubmit = async (data: any) => {};
+  const onSubmit = async (data: TsOrderSchemaType) => {
+    const response = await fetch("/api/cart", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    alert(JSON.stringify(data, null, 4));
 
   return (
     <main className="grid justify-center ">

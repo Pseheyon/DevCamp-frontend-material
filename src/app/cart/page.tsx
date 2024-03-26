@@ -218,6 +218,7 @@ export default function Cart() {
       },
     });
     alert(JSON.stringify(data, null, 4));
+  };
 
   return (
     <main className="grid justify-center ">

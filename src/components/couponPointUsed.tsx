@@ -156,7 +156,7 @@ const CouponPointUsedFrom: React.FC<Props> = ({
       {isResetButtonShown ? (
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleReset}
         >
@@ -165,7 +165,7 @@ const CouponPointUsedFrom: React.FC<Props> = ({
       ) : (
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleUseAllPoints}
           disabled={isButtonClicked}

@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { TsOrderSchemaType } from "@/validators/cartSchema"; // 필요한 타입 임포트
+import { error } from "console";
 
 interface Props {
   form: UseFormReturn<TsOrderSchemaType>;
@@ -66,17 +67,21 @@ const CouponCodeFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
     if (isButtonClicked) return;
 
     const numericValue = cartData.coupon.couponCode;
-    const percent = extractDiscountPercent(numericValue);
+    const percent = numericValue ? extractDiscountPercent(numericValue) : 0;
     const maxPoints = cartData.paymentAmount.total;
 
     let updatedtotal =
       cartData.paymentAmount.total - maxPoints * (percent * 0.01);
-
-    // updatedtotal이 0 밑으로 되면 total에 원래의 값 유지
-    if (updatedtotal < 1000) {
-      alert("1000원 이하는 사용이 불가능합니다");
-      return;
+    if (numericValue !== undefined) {
+      const percent = extractDiscountPercent(numericValue);
+      if (updatedtotal < 1000) {
+        alert("1000원 이하는 사용이 불가능합니다");
+        return;
+      }
+    } else {
+      alert("실패");
     }
+    // updatedtotal이 0 밑으로 되면 total에 원래의 값 유지
 
     setIsButtonClicked(true);
     setIsResetButtonShown(true);
@@ -96,7 +101,7 @@ const CouponCodeFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
     setIsButtonClicked(false);
     setIsResetButtonShown(false);
     if (!setIsResetButtonShown) {
-      alert("쿠폰/포인트를 다시 적립해주세요");
+      alert("쿠폰/포인트를 다시 적용해주세요");
       return;
     }
 
@@ -138,7 +143,7 @@ const CouponCodeFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       {isResetButtonShown ? ( // 초기화 버튼이 표시될 경우에만 보여줌
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleReset}
         >
@@ -147,10 +152,10 @@ const CouponCodeFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       ) : (
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleUseDiscount}
-          disabled={isButtonClicked} // 번호확인 버튼 클릭 상태에 따라 비활성화 처리
+          disabled={isButtonClicked}
         >
           번호확인
         </Button>

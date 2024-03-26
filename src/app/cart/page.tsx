@@ -304,7 +304,7 @@ export default function Cart() {
                               <Button
                                 type="button"
                                 size="icon"
-                                variant="outline"
+                                variant="secondary"
                                 className=" box-border h-min mr-1"
                               >
                                 정보
@@ -386,7 +386,7 @@ export default function Cart() {
                           <FormControl>
                             <div className="flex justify-center self-stretch mt-1 h-sss">
                               <Button
-                                variant="outline"
+                                variant="secondary"
                                 type="button"
                                 className=" rounded-none box-border size-px px-2 py-2"
                                 onClick={() =>
@@ -404,7 +404,7 @@ export default function Cart() {
                                 {cartData.productInfo.quantity}
                               </span>
                               <Button
-                                variant="outline"
+                                variant="secondary"
                                 type="button"
                                 className=" rounded-none box-border size-px px-2 py-2 "
                                 onClick={() =>
@@ -522,7 +522,7 @@ export default function Cart() {
                 <div>
                   {isUserEditMode ? (
                     <Button
-                      variant="outline"
+                      variant="secondary"
                       type="button"
                       className="rounded-[3px]"
                       onClick={handleUserSaveClick}
@@ -532,7 +532,7 @@ export default function Cart() {
                   ) : (
                     <Button
                       type="button"
-                      variant="outline"
+                      variant="secondary"
                       className="rounded-[3px]"
                       onClick={handleUserEditClick}
                     >
@@ -639,7 +639,7 @@ export default function Cart() {
                   {isShippingEditMode ? (
                     <Button
                       type="button"
-                      variant="outline"
+                      variant="secondary"
                       className="rounded-[3px]"
                       onClick={handleShippingSaveClick}
                     >
@@ -648,7 +648,7 @@ export default function Cart() {
                   ) : (
                     <Button
                       type="button"
-                      variant="outline"
+                      variant="secondary"
                       className="rounded-[3px]"
                       onClick={handleShippingEditClick}
                     >
@@ -686,7 +686,7 @@ export default function Cart() {
                 )}
               />
               {/* </CardContent> */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="role"
                 render={({ field }) => (
@@ -709,7 +709,7 @@ export default function Cart() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </Card>
             <Card className=" mt-4 mb-8 boder rounded-none box-border shadow-sm border">
               <CardTitle className="p-4 pt-5 ">쿠폰/포인트</CardTitle>
@@ -723,39 +723,11 @@ export default function Cart() {
                   cartData={cartData}
                   setCartData={setCartData}
                 />
-                {totaldis}
               </CardContent>
               <CardHeader className=" pb-2 pt-1 font-bold">
                 쿠폰 번호
               </CardHeader>
-              <CardContent className="flex size-full justify-center gap-2 rounded-none w-full">
-                {/*쿠폰 코드-% */}
-                <FormField
-                  control={form.control}
-                  name="coupon.couponCode"
-                  render={({ field }) => (
-                    <FormItem className="basis-4/5">
-                      <FormControl className="w-full">
-                        <Input
-                          className=" rounded-none bg-inherit border"
-                          placeholder="쿠폰 번호 입력"
-                          {...field}
-                          onChange={handlePointsDiscountChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="button"
-                  variant="deepnavy"
-                  className="basis-1/5 text-center box-border rounded-[3px]"
-                  onClick={handleUseDiscount}
-                >
-                  번호확인
-                </Button>
-              </CardContent>
+
               <CardContent className="flex size-full justify-center gap-2 rounded-none w-full">
                 <CouponCodeFrom
                   form={form}
@@ -767,32 +739,7 @@ export default function Cart() {
               <CardContent>
                 <div className="flex size-full justify-center gap-2 rounded-none w-full">
                   {/*쿠폰 포인트 사용*/}
-                  <FormField
-                    control={form.control}
-                    name="coupon.pointsUsed"
-                    render={({ field }) => (
-                      <FormItem className="basis-4/5">
-                        <FormControl className="w-full">
-                          <Input
-                            className="rounded-none bg-inherit border"
-                            placeholder="0"
-                            {...field}
-                            onChange={handlePointsDiscountChange}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="basis-1/5 text-center box-border rounded-[3px]"
-                    onClick={handleUseDiscount}
-                  >
-                    사용
-                  </Button>
                   <CouponPointUsedFrom
                     form={form}
                     cartData={cartData}
@@ -833,19 +780,6 @@ export default function Cart() {
                   </p>
                 </div>
                 <div className="flex flex-row w-full justify-between">
-                  {/* <FormField
-                    control={form.control}
-                    name="user.username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <p className="text-slate-500 font-medium" {...field}>
-                          쿠폰 할인
-                        </p>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  /> */}
-                  {/*쿠폰 + 쿠폰 할인*/}
                   <p className="text-slate-500 font-medium">할인 가격</p>
                   <p className="font-bold">
                     <span>{cartData.paymentAmount.discount}</span>

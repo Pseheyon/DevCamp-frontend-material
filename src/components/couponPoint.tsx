@@ -74,43 +74,46 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
   };
 
   const handleUseAllPoints = () => {
-    const updatedtotal =
-      cartData.paymentAmount.total - cartData.coupon.couponPoint;
-    form.setValue("paymentAmount.total", updatedtotal);
-    form.setValue("paymentAmount.discount", 0);
+    if (cartData.coupon && cartData.coupon.couponPoint !== undefined) {
+      const updatedtotal =
+        cartData.paymentAmount.total - cartData.coupon.couponPoint;
+      form.setValue("paymentAmount.total", updatedtotal);
+      form.setValue("paymentAmount.discount", 0);
 
-    if (cartData.coupon.couponPoint > (amoutQuantitypay || total)) {
-      alert(`현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.`);
-      return;
-    } else if (total < 0) {
-      alert(`현재금액이 0 원이므로 사용이 불가능 합니다.`);
-      return;
-    } else if (updatedtotal < 0) {
-      alert(`할인 금액이 0보다 낮아 구매가 불가능 합니다.`);
-      return;
-    } else if (setIsResetButtonShown(false) || setIsButtonClicked(false)) {
+      if (cartData.coupon.couponPoint > (amoutQuantitypay || total)) {
+        alert(`현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.`);
+        return;
+      } else if (total < 0) {
+        alert(`현재금액이 0 원이므로 사용이 불가능 합니다.`);
+        return;
+      } else if (updatedtotal < 0) {
+        alert(`할인 금액이 0보다 낮아 구매가 불가능 합니다.`);
+        return;
+      }
       setIsResetButtonShown(true);
       setIsButtonClicked(true);
-    }
 
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: updatedtotal,
-        discount: 0,
-      },
-    }));
+      setCartData((prevCartData) => ({
+        ...prevCartData,
+        paymentAmount: {
+          ...prevCartData.paymentAmount,
+          total: updatedtotal,
+          discount: 0,
+        },
+      }));
+      alert(`쿠폰이 적용되었습니다`);
+    } else {
+    }
 
     console.log("포인트 사용 확인", cartData.coupon.couponPoint);
   };
 
   const handleReset = () => {
-    if (setIsResetButtonShown || setIsButtonClicked) {
-      setIsButtonClicked(false);
-      setIsResetButtonShown(false);
-    }
+    setIsButtonClicked(false);
+    setIsResetButtonShown(false);
+
     const updatedtotal = amoutQuantitypay;
+
     form.setValue("paymentAmount.total", updatedtotal);
     setCartData((prevCartData) => ({
       ...prevCartData,
@@ -144,7 +147,7 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       {isResetButtonShown ? (
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleReset}
         >
@@ -153,12 +156,12 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       ) : (
         <Button
           type="button"
-          variant="deepnavy"
+          variant="secondary"
           className="basis-1/5 text-center box-border rounded-[3px]"
           onClick={handleUseAllPoints}
           disabled={isButtonClicked}
         >
-          {isButtonClicked ? "처리 중" : "사용"}
+          사용
         </Button>
       )}
     </div>

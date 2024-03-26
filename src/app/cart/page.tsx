@@ -962,9 +962,12 @@ export default function Cart() {
               </CardContent>
               <CardContent className="grid justify-items-center  bg-indigo-600 w-full p-3 justify-center text-center">
                 <Button
-                  className="bg-transparent"
+                  className="flex items-center text-center text-white font-extrabold self-center w-full basis-full"
                   type="submit"
-                  onClick={onSubmit}
+                  onClick={(e) => {
+                    console.log("확인", date);
+                    form.handleSubmit(onSubmit)(e);
+                  }}
                 >
                   결제하기
                 </Button>

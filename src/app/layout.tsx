@@ -30,7 +30,7 @@ export default function RootLayout({
         >
           <Header />
           {/* <SignUpFrom /> */}
-          <DarkModeToggle />
+
           {children}
         </ThemeProvider>
       </body>

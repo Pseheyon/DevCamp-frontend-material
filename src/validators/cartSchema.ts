@@ -15,7 +15,7 @@ const productInfoSchema = z.object({
 
 const shippingInfoSchema = z.object({
   address: z.string(),
-  shippingType: z.string().min(8, { message: "배송메모." }),
+  shippingType: z.string().min(1, { message: "배송메모." }),
   recipient: z.string(),
   recipientphone: z.string(),
 });
@@ -39,11 +39,11 @@ const couponPointSchema = z.object({
 });
 
 const paymentAmountSchema = z.object({
-  subtotal: z.number().optional(),
   discount: z.number().optional(),
-  shippingFee: z.number().optional(),
   total: z.number(),
-  depositor: z.number().optional(),
+  // subtotal: z.number().optional(),
+  // shippingFee: z.number().optional(),
+  // depositor: z.number().optional(),
 });
 
 const paymentMethodSchema = z.object({

@@ -29,7 +29,7 @@ export function DarkModeToggle() {
   };
 
   return (
-    <div className="w-10 h-10 flex items-center justify-center">
+    <div className="w-10 h-10 flex items-center justify-center float-end">
       {theme !== "dark" ? (
         <motion.div
           initial={{ opacity: 0, rotate: -120 }}

@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { TsOrderSchemaType, orderSchema } from "@/validators/cartSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { mockCartData } from "@/app/api/cart/route";
+import { mockCartData } from "@/app/pages/api/cart/route";
 import { number, z } from "zod";
 import Image from "next/image";
 import { Children, useEffect, useState } from "react";

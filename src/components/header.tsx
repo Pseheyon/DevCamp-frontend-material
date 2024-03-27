@@ -8,11 +8,12 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import Link from "next/link";
+import { DarkModeToggle } from "./dark-mode-toggle";
 
 export default function Header() {
   return (
     <>
-      <Menubar>
+      <Menubar className="">
         <MenubarMenu>
           <MenubarTrigger>
             <Link href="/">홈</Link>
@@ -53,6 +54,7 @@ export default function Header() {
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
+        <DarkModeToggle />
       </Menubar>
     </>
   );

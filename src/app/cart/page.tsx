@@ -86,9 +86,8 @@ export default function Cart() {
         depositor: cartData?.paymentMethod.depositor || "",
       },
       purchaseAgreement: {
-        termsAndConditions:
-          cartData?.purchaseAgreement.termsAndConditions || true,
-        privacyPolicy: cartData?.purchaseAgreement.privacyPolicy || true,
+        termsAndConditions: cartData?.purchaseAgreement.termsAndConditions,
+        privacyPolicy: cartData?.purchaseAgreement.privacyPolicy,
       },
     },
   });
@@ -919,9 +918,9 @@ export default function Cart() {
                     <FormItem>
                       <div className="items-top flex space-x-2 mb-4">
                         <Checkbox
-                          id="terms1"
-                          checked={field.value}
-                          onCheckedChange={() => field.onChange(!field.value)}
+                          // id="terms1"
+                          checked={!!field.value} // boolean 값으로 변환하여 전달
+                          onCheckedChange={field.onChange}
                           {...field}
                         />
                         <div className="grid gap-1.5 leading-none">
@@ -945,9 +944,9 @@ export default function Cart() {
                       <FormItem>
                         <div className="items-top flex space-x-2 mb-4">
                           <Checkbox
-                            id="terms1"
-                            checked={field.value}
-                            onCheckedChange={() => field.onChange(!field.value)}
+                            // id="terms1"
+                            checked={!!field.value} // boolean 값으로 변환하여 전달
+                            onCheckedChange={field.onChange}
                             {...field}
                           />
                           <div className="grid gap-1.5 leading-none">

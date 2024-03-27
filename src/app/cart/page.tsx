@@ -919,7 +919,7 @@ export default function Cart() {
                       <div className="items-top flex space-x-2 mb-4">
                         <Checkbox
                           // id="terms1"
-                          checked={field.value} // boolean 값으로 변환하여 전달
+                          checked={!!field.value} // boolean 값으로 변환하여 전달
                           onCheckedChange={() => field.onChange(!field.value)}
                           {...field}
                         />
@@ -945,7 +945,7 @@ export default function Cart() {
                         <div className="items-top flex space-x-2 mb-4">
                           <Checkbox
                             // id="terms1"
-                            checked={field.value} // boolean 값으로 변환하여 전달
+                            checked={!!field.value} // boolean 값으로 변환하여 전달
                             onCheckedChange={() => field.onChange(!field.value)}
                             {...field}
                           />

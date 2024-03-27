@@ -36,13 +36,10 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
   const total = cartData.paymentAmount.total;
 
   const handlePointsUsedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputVal = e.target.value.trim(); // 입력된 값에서 공백 제거
-
+    const inputVal = e.target.value.trim();
     if (!inputVal) {
-      // 입력된 값이 없는 경우에 대한 처리
       return;
     }
-
     const numericValue: number = parseFloat(inputVal);
 
     if (isNaN(numericValue)) {
@@ -50,46 +47,66 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       alert("숫자를 입력해주세요.");
       return;
     }
-
-    if (numericValue < (amoutQuantitypay || total)) {
+    if (numericValue > (amoutQuantitypay || total)) {
       alert(`현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.`);
+      form.setValue("coupon.couponPoint", 0);
       return;
     }
 
-    const minPoints = 5000;
-    const maxPoints = total; // 가용한 포인트 상한값
+    if (numericValue > (amoutQuantitypay || total)) {
+      alert(
+        `현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.chang값${numericValue}`
+      );
+      form.setValue("coupon.couponPoint", 0);
+      return;
+    } else if (total < 0) {
+      alert(`현재금액이 0 원이므로 사용이 불가능 합니다.`);
+      return;
+    } else if (numericValue < 0) {
+      alert(`할인 금액이 0보다 낮아 구매가 불가능 합니다.`);
+      return;
+    }
+    if (cartData.paymentAmount.discount !== undefined) {
+      const discount = cartData.paymentAmount.discount;
+      const setDiscout = discount + numericValue;
+      form.setValue("coupon.couponPoint", numericValue);
+      form.setValue("paymentAmount.discount", numericValue);
 
-    const clampedValue = Math.max(
-      maxPoints - Math.max(minPoints, numericValue),
-      0
-    );
-    form.setValue("paymentAmount.discount", clampedValue);
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        discount: numericValue,
-      },
-    }));
+      setCartData((prevCartData) => ({
+        ...prevCartData,
+        coupon: {
+          ...prevCartData.coupon,
+          couponPoint: numericValue,
+        },
+        paymentAmount: {
+          ...prevCartData.paymentAmount,
+          discount: setDiscout,
+        },
+      }));
+    }
   };
 
   const handleUseAllPoints = () => {
     if (cartData.coupon && cartData.coupon.couponPoint !== undefined) {
+      const cartPoint = cartData.coupon.couponPoint;
+      if (cartPoint > (amoutQuantitypay || total)) {
+        alert(
+          `현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.${cartPoint}`
+        );
+        return;
+      } else if (total < 0) {
+        alert(`현재금액이 0 원이므로 사용이 불가능 합니다.`);
+        return;
+      } else if (cartPoint < 0) {
+        alert(`할인 금액이 0보다 낮아 구매가 불가능 합니다.`);
+        return;
+      }
+
       const updatedtotal =
         cartData.paymentAmount.total - cartData.coupon.couponPoint;
       form.setValue("paymentAmount.total", updatedtotal);
       form.setValue("paymentAmount.discount", 0);
 
-      if (cartData.coupon.couponPoint > (amoutQuantitypay || total)) {
-        alert(`현재 총 금액이 쿠폰보다 적으므로 사용이 불가능 합니다.`);
-        return;
-      } else if (total < 0) {
-        alert(`현재금액이 0 원이므로 사용이 불가능 합니다.`);
-        return;
-      } else if (updatedtotal < 0) {
-        alert(`할인 금액이 0보다 낮아 구매가 불가능 합니다.`);
-        return;
-      }
       setIsResetButtonShown(true);
       setIsButtonClicked(true);
 
@@ -98,7 +115,6 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
         paymentAmount: {
           ...prevCartData.paymentAmount,
           total: updatedtotal,
-          discount: 0,
         },
       }));
       alert(`쿠폰이 적용되었습니다`);
@@ -136,7 +152,10 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
                 className="rounded-none bg-inherit border"
                 placeholder="0"
                 {...field}
-                onChange={handlePointsUsedChange}
+                onChange={(e) => {
+                  field.onChange(e); // react-hook-form이 제공하는 onChange 이벤트 핸들러 호출
+                  handlePointsUsedChange(e); // 추가적인 처리를 위해 사용자 정의 핸들러 호출
+                }}
               />
             </FormControl>
             <FormMessage />

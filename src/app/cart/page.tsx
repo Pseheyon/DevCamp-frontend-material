@@ -184,26 +184,6 @@ export default function Cart() {
     }
   };
 
-  //쿠폰형 데이터
-  const handlePointsDiscountChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const numericValue = e.target.value;
-    const percent = extractDiscountPercent(numericValue);
-
-    const maxPoints = amoutQuantitypay; // 가용한 포인트 상한값
-
-    const clampedValue = maxPoints - maxPoints * (percent * 0.01);
-
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      coupon: {
-        ...prevCartData.coupon,
-        couponCode: `쿠폰코드 ${clampedValue}%사용`,
-      },
-    }));
-  };
-
   const user = cartData.user.username;
   const amount = cartData.paymentAmount.total;
   const orderId = Math.random().toString(36).slice(2);
@@ -897,7 +877,7 @@ export default function Cart() {
                 </p>
                 <hr className="mt-2 mb-4" />
                 <div className="items-top flex space-x-2">
-                  {/* <Checkbox id="terms1" />
+                  <Checkbox id="terms1" />
                   <div className="grid gap-1.5 leading-none">
                     <label
                       htmlFor="terms1"
@@ -905,7 +885,7 @@ export default function Cart() {
                     >
                       현금 영수증 신청
                     </label>
-                  </div> */}
+                  </div>
                 </div>
               </CardContent>
             </Card>

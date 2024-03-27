@@ -68,13 +68,13 @@ const CouponPointUsedFrom: React.FC<Props> = ({
       0
     );
 
-    // setCartData((prevCartData) => ({
-    //   ...prevCartData,
-    //   coupon: {
-    //     ...prevCartData.coupon,
-    //     couponPoint: clampedValue,
-    //   },
-    // }));
+    setCartData((prevCartData) => ({
+      ...prevCartData,
+      coupon: {
+        ...prevCartData.coupon,
+        pointsUsed: clampedValue,
+      },
+    }));
   };
 
   const handleUseAllPoints = () => {
@@ -149,7 +149,7 @@ const CouponPointUsedFrom: React.FC<Props> = ({
                 className="rounded-none bg-inherit border"
                 placeholder="0"
                 {...field}
-                onChange={handlePointsUsedChange}
+                onChange={(e) => handlePointsUsedChange(e)}
               />
             </FormControl>
             <FormMessage />

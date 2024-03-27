@@ -897,7 +897,7 @@ export default function Cart() {
                 </p>
                 <hr className="mt-2 mb-4" />
                 <div className="items-top flex space-x-2">
-                  <Checkbox id="terms1" />
+                  {/* <Checkbox id="terms1" />
                   <div className="grid gap-1.5 leading-none">
                     <label
                       htmlFor="terms1"
@@ -905,7 +905,7 @@ export default function Cart() {
                     >
                       현금 영수증 신청
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
@@ -919,8 +919,8 @@ export default function Cart() {
                       <div className="items-top flex space-x-2 mb-4">
                         <Checkbox
                           // id="terms1"
-                          checked={!!field.value} // boolean 값으로 변환하여 전달
-                          onCheckedChange={field.onChange}
+                          checked={field.value} // boolean 값으로 변환하여 전달
+                          onCheckedChange={() => field.onChange(!field.value)}
                           {...field}
                         />
                         <div className="grid gap-1.5 leading-none">
@@ -945,8 +945,8 @@ export default function Cart() {
                         <div className="items-top flex space-x-2 mb-4">
                           <Checkbox
                             // id="terms1"
-                            checked={!!field.value} // boolean 값으로 변환하여 전달
-                            onCheckedChange={field.onChange}
+                            checked={field.value} // boolean 값으로 변환하여 전달
+                            onCheckedChange={() => field.onChange(!field.value)}
                             {...field}
                           />
                           <div className="grid gap-1.5 leading-none">

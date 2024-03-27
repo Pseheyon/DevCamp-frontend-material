@@ -52,12 +52,14 @@ const paymentMethodSchema = z.object({
 });
 
 const purchaseAgreementSchema = z.object({
-  termsAndConditions: z.boolean().refine((value) => value === false, {
-    message: "구매를 위해 약관에 동의해야 합니다.",
-  }),
-  privacyPolicy: z.boolean().refine((value) => value === false, {
-    message: "구매를 위해 개인정보 처리 방침에 동의해야 합니다.",
-  }),
+  termsAndConditions: z.boolean(),
+  // .refine((value) => value === false, {
+  //   message: "구매를 위해 약관에 동의해야 합니다.",
+  // }),
+  privacyPolicy: z.boolean(),
+  // .refine((value) => value === false, {
+  //   message: "구매를 위해 개인정보 처리 방침에 동의해야 합니다.",
+  //}),
 });
 
 export const orderSchema = z.object({

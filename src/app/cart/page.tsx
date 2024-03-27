@@ -919,9 +919,18 @@ export default function Cart() {
                       <div className="items-top flex space-x-2 mb-4">
                         <Checkbox
                           // id="terms1"
-                          checked={!!field.value} // boolean 값으로 변환하여 전달
+                          checked={
+                            typeof field.value === "boolean"
+                              ? field.value
+                              : field.value === "true"
+                          }
                           onCheckedChange={() => field.onChange(!field.value)}
                           {...field}
+                          value={
+                            typeof field.value === "boolean"
+                              ? String(field.value)
+                              : field.value
+                          }
                         />
                         <div className="grid gap-1.5 leading-none">
                           <label
@@ -945,9 +954,18 @@ export default function Cart() {
                         <div className="items-top flex space-x-2 mb-4">
                           <Checkbox
                             // id="terms1"
-                            checked={!!field.value} // boolean 값으로 변환하여 전달
+                            checked={
+                              typeof field.value === "boolean"
+                                ? field.value
+                                : field.value === "true"
+                            }
                             onCheckedChange={() => field.onChange(!field.value)}
                             {...field}
+                            value={
+                              typeof field.value === "boolean"
+                                ? String(field.value)
+                                : field.value
+                            }
                           />
                           <div className="grid gap-1.5 leading-none">
                             <label

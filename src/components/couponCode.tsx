@@ -10,7 +10,6 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { mockCartData } from "@/app/api/cart/route";
 import { useToast } from "./ui/use-toast";
 import { Input } from "@/components/ui/input";
 import {

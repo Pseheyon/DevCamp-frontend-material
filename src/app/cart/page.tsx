@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { TsOrderSchemaType, orderSchema } from "@/validators/cartSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { mockCartData } from "@/app/pages/api/cart/route";
+import { mockCartData } from "@/app/api/cart/route";
 import { number, z } from "zod";
 import Image from "next/image";
 import { Children, useEffect, useState } from "react";
@@ -211,13 +211,17 @@ export default function Cart() {
   const orderName = cartData.productInfo.productname;
 
   const onSubmit = async (data: TsOrderSchemaType) => {
-    const response = await fetch("pages/api/cart", {
+    const response = await fetch("/api/cart", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    if (!response.ok) {
+      alert("잘못된 접rms입니다.");
+    }
+
     alert(JSON.stringify(data, null, 4));
   };
 
@@ -965,10 +969,10 @@ export default function Cart() {
                 <Button
                   className="flex items-center text-center text-white font-extrabold self-center w-full basis-full"
                   type="submit"
-                  onClick={(e) => {
-                    console.log("확인", date);
-                    form.handleSubmit(onSubmit)(e);
-                  }}
+                  // onClick={(e) => {
+                  //   console.log("확인", date);
+                  //   form.handleSubmit(onSubmit)(e);
+                  // }}
                 >
                   결제하기
                 </Button>

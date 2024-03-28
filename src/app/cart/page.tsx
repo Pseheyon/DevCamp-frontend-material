@@ -33,14 +33,10 @@ import { date } from "zod";
 import CouponCodeFrom from "@/components/couponCode";
 import CouponPointFrom from "@/components/couponPoint";
 import CouponPointUsedFrom from "@/components/couponPointUsed";
-import { loadTossPayments } from "@tosspayments/payment-sdk";
+
 //type TsOrderSchemaType = z.infer<typeof orderSchema>;
 
 export default function Cart() {
-  useEffect(() => {
-    // 페이지가 로딩될 때마다 로컬 스토리지 초기화
-    localStorage.clear();
-  }, []);
   const [cartData, setCartData] = useState(mockCartData[0]);
   const [editedUser, setEditedUser] = useState({
     username: cartData.user.username,
@@ -126,6 +122,69 @@ export default function Cart() {
       },
     }));
   };
+
+  const handleUserEditClick = () => {
+    setUserEditMode(true);
+  };
+
+  const handleUserSaveClick = () => {
+    setCartData((prevCartData) => ({
+      ...prevCartData,
+      user: editedUser,
+    }));
+    setUserEditMode(false);
+  };
+
+  const handleShippingEditClick = () => {
+    setShippingEditMode(true);
+  };
+
+  const handleShippingSaveClick = () => {
+    setCartData((prevCartData) => ({
+      ...prevCartData,
+      shippingInfo: shippingInfoe,
+    }));
+    setShippingEditMode(false);
+  };
+  console.log(form.watch());
+  const getPoint = Math.round(cartData.paymentAmount.total / 100);
+
+  const amoutQuantitypay =
+    cartData.productInfo.price * cartData.productInfo.quantity;
+
+  //포인트사용
+  const handlePointsUsedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const numericValue = parseFloat(e.target.value);
+
+    const minPoints = 5000;
+    const maxPoints = amoutQuantitypay; // 가용한 포인트 상한값
+
+    const clampedValue = Math.max(
+      maxPoints - Math.max(minPoints, numericValue),
+      0
+    );
+
+    setCartData((prevCartData) => ({
+      ...prevCartData,
+      coupon: {
+        ...prevCartData.coupon,
+        couponPoint: clampedValue,
+      },
+    }));
+  };
+
+  // 쿠폰 코드에서 할인 퍼센트를 추출하는 함수
+  const extractDiscountPercent = (code: string) => {
+    const regex = /(\d{1,2})%/;
+    const match = code.match(regex);
+    if (match) {
+      return parseInt(match[1]);
+    } else {
+      return 0;
+    }
+  };
+
+  const user = cartData.user.username;
   const amount = cartData.paymentAmount.total;
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
@@ -141,7 +200,6 @@ export default function Cart() {
       failUrl: `${window.location.origin}/api/payments/fail`,
     });
   };
-
   // const onSubmit = async (data: TsOrderSchemaType) => {
   //   const response = await fetch("/api/cart", {
   //     method: "POST",
@@ -622,7 +680,6 @@ export default function Cart() {
                 className="flex size-full justify-center gap-2 
               rounded-none w-full"
               >
-                {/* 쿠폰 */}
                 <CouponPointFrom
                   form={form}
                   cartData={cartData}
@@ -633,7 +690,7 @@ export default function Cart() {
               <CardHeader className=" pb-2 pt-1 font-bold">
                 쿠폰 번호
               </CardHeader>
-              {/* 쿠폰 */}
+
               <CardContent className="flex size-full justify-center gap-2 rounded-none w-full">
                 <CouponCodeFrom
                   form={form}
@@ -641,9 +698,11 @@ export default function Cart() {
                   setCartData={setCartData}
                 />
               </CardContent>
-              {/* <CardHeader className=" pb-2 pt-1 font-bold">적립금</CardHeader>
+              <CardHeader className=" pb-2 pt-1 font-bold">포인트</CardHeader>
               <CardContent>
                 <div className="flex size-full justify-center gap-2 rounded-none w-full">
+                  {/*쿠폰 포인트 사용*/}
+
                   <CouponPointUsedFrom
                     form={form}
                     cartData={cartData}
@@ -656,7 +715,7 @@ export default function Cart() {
                 <p className=" text-slate-400 text-xs pt-1 ">
                   5000 포인트 이상 보유 및 10,000 이상 구매시 사용가능
                 </p>
-              </CardContent> */}
+              </CardContent>
             </Card>
           </Card>
           <Card className="col-span-1 rounded-none bg-inherit border-none">

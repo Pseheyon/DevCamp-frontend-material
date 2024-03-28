@@ -35,9 +35,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
           (list.properties.description as any).rich_text[0].plain_text
         }
         slug={(list.properties.slug as any).rich_text[0].plain_text}
-        price={(list.properties.price as any).multi_select.map(
-          (price: any) => price.name
-        )}
+        price={(list.properties.price as any).number}
+        productImg={(list.properties.productImg as any).rich_text[0].plain_text}
+        detailImg={(list.properties.detailImg as any).rich_text[0].plain_text}
         content={html}
       />
     </>

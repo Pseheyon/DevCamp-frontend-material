@@ -37,6 +37,10 @@ import CouponPointUsedFrom from "@/components/couponPointUsed";
 //type TsOrderSchemaType = z.infer<typeof orderSchema>;
 
 export default function Cart() {
+  useEffect(() => {
+    // 페이지가 로딩될 때마다 로컬 스토리지 초기화
+    localStorage.clear();
+  }, []);
   const [cartData, setCartData] = useState(mockCartData[0]);
   const [editedUser, setEditedUser] = useState({
     username: cartData.user.username,
@@ -669,16 +673,18 @@ export default function Cart() {
                 className="flex size-full justify-center gap-2 
               rounded-none w-full"
               >
+                {/* 쿠폰 */}
                 <CouponPointFrom
                   form={form}
                   cartData={cartData}
                   setCartData={setCartData}
                 />
               </CardContent>
+
               <CardHeader className=" pb-2 pt-1 font-bold">
                 쿠폰 번호
               </CardHeader>
-
+              {/* 쿠폰 */}
               <CardContent className="flex size-full justify-center gap-2 rounded-none w-full">
                 <CouponCodeFrom
                   form={form}
@@ -686,11 +692,9 @@ export default function Cart() {
                   setCartData={setCartData}
                 />
               </CardContent>
-              <CardHeader className=" pb-2 pt-1 font-bold">포인트</CardHeader>
+              {/* <CardHeader className=" pb-2 pt-1 font-bold">적립금</CardHeader>
               <CardContent>
                 <div className="flex size-full justify-center gap-2 rounded-none w-full">
-                  {/*쿠폰 포인트 사용*/}
-
                   <CouponPointUsedFrom
                     form={form}
                     cartData={cartData}
@@ -703,7 +707,7 @@ export default function Cart() {
                 <p className=" text-slate-400 text-xs pt-1 ">
                   5000 포인트 이상 보유 및 10,000 이상 구매시 사용가능
                 </p>
-              </CardContent>
+              </CardContent> */}
             </Card>
           </Card>
           <Card className="col-span-1 rounded-none bg-inherit border-none">

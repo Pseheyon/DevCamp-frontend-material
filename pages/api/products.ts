@@ -11,16 +11,18 @@ export async function getItems() {
   const response = await notion.databases.query({
     database_id: databaseId || "",
   });
-  //console.log("어디있는 지 확인", response.results);
+  console.log("어디있는 지 확인-------------", response);
   return response.results.map((page: any) => ({
     id: page.id,
-    price:
-      page.properties["price"]?.multi_select.map((price: any) => price.name) ||
-      [],
+    productImg: page.properties["productImg"].rich_text[0]?.text.content || "",
+    detailImg: page.properties["detailImg"].rich_text[0]?.text.content || "",
+    price: page.properties["price"].number || [],
     productName: page.properties["productName"]?.title[0]?.text.content || "",
+    slug: page.properties["slug"]?.rich_text[0]?.text.content || "",
     description:
       page.properties["description"]?.rich_text[0]?.text.content || "",
   }));
+  // return response;
 }
 
 export default async function handler(

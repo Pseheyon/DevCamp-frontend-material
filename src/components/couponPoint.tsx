@@ -70,7 +70,7 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
       const discount = cartData.paymentAmount.discount;
       const setDiscout = discount + numericValue;
       form.setValue("coupon.couponPoint", numericValue);
-      form.setValue("paymentAmount.discount", numericValue);
+      form.setValue("paymentAmount.discount", discount);
 
       setCartData((prevCartData) => ({
         ...prevCartData,
@@ -78,16 +78,20 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
           ...prevCartData.coupon,
           couponPoint: numericValue,
         },
-        paymentAmount: {
-          ...prevCartData.paymentAmount,
-          discount: setDiscout,
-        },
+        // paymentAmount: {
+        //   ...prevCartData.paymentAmount,
+        //   discount: setDiscout,
+        // },
       }));
     }
   };
 
   const handleUseAllPoints = () => {
-    if (cartData.coupon && cartData.coupon.couponPoint !== undefined) {
+    if (
+      cartData.coupon &&
+      cartData.coupon.couponPoint &&
+      cartData.paymentAmount.discount !== undefined
+    ) {
       const cartPoint = cartData.coupon.couponPoint;
       if (cartPoint > (amoutQuantitypay || total)) {
         alert(
@@ -102,11 +106,15 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
         return;
       }
 
+      const discount = cartData.coupon.couponPoint;
+      const isdiscount = cartData.paymentAmount.discount;
+      const resetcoutn = discount + isdiscount;
       const updatedtotal =
         cartData.paymentAmount.total - cartData.coupon.couponPoint;
       form.setValue("paymentAmount.total", updatedtotal);
-      form.setValue("paymentAmount.discount", 0);
-
+      form.setValue("paymentAmount.discount", discount);
+      const setDiscount = discount;
+      localStorage.setItem("couponPointDis", `${setDiscount}`);
       setIsResetButtonShown(true);
       setIsButtonClicked(true);
 
@@ -115,6 +123,7 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
         paymentAmount: {
           ...prevCartData.paymentAmount,
           total: updatedtotal,
+          discount: resetcoutn,
         },
       }));
       alert(`쿠폰이 적용되었습니다`);
@@ -125,19 +134,28 @@ const CouponPointFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
   };
 
   const handleReset = () => {
-    setIsButtonClicked(false);
-    setIsResetButtonShown(false);
+    const couponPointDis = localStorage.getItem("couponPointDis");
+    if (
+      cartData.coupon.couponPoint &&
+      cartData.paymentAmount.discount !== undefined &&
+      couponPointDis !== null
+    ) {
+      setIsButtonClicked(false);
+      setIsResetButtonShown(false);
 
-    const updatedtotal = amoutQuantitypay;
-
-    form.setValue("paymentAmount.total", updatedtotal);
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: updatedtotal,
-      },
-    }));
+      const updatedtotal = amoutQuantitypay;
+      const discount = cartData.paymentAmount.discount;
+      const setDiscout = discount - parseInt(couponPointDis);
+      form.setValue("paymentAmount.total", updatedtotal);
+      setCartData((prevCartData) => ({
+        ...prevCartData,
+        paymentAmount: {
+          ...prevCartData.paymentAmount,
+          total: updatedtotal,
+          discount: setDiscout,
+        },
+      }));
+    }
   };
 
   return (

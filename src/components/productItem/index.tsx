@@ -1,67 +1,45 @@
 "use client";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+
 import { useEffect, useRef, useState } from "react";
 import { GetStaticProps } from "next";
-import { getItems } from "../../utils/notion";
 
-interface ListProps {
-  productName: string;
-  description: string;
-  price: string[];
-  content: string;
-  slug: string;
-}
+import { type ListProps } from "@/interfaces/listProps";
+import Image from "next/image";
+
 interface List {
   list: ListProps[];
 }
 
 export function Product(props: ListProps) {
-  const { productName, description, price, content } = props;
+  const { productName, description, price, content, productImg, detailImg } =
+    props;
   return (
-    <main>
+    <main className="w-full flex items-center justify-center">
       {/* <Button onClick={handleClick}>add jacket 2</Button> */}
-      <div>
-        <div>
-          <h2>{productName}</h2>
-          <ul>
-            {price.map((tag) => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-          <p>{description}</p>
+
+      <div className="w-[1280px] ">
+        <h1 className="text-2xl font-black  mb-8  mt-8">{productName}</h1>
+        <div className="flex items-center r h-full px-80">
+          <div
+            className="font-semibold relative h-[450px] w-full
+          "
+          >
+            <Image
+              src={productImg}
+              fill
+              alt="Picture of the author"
+              priority
+              className=" object-cover object-top"
+            />
+          </div>
+          <div className=" basis-5">구매</div>
         </div>
+        <ul>{price}</ul>
+        <p>{description}</p>
         <div
-          className="text-xl mt-4 max-w-3xl leading-10 prose prose-p:text-white prose-headings:text-white"
+          className="text-xl mt-4 leading-10 prose prose-p:text-white w-full"
           dangerouslySetInnerHTML={{ __html: content }}
         ></div>
-      </div>
-    </main>
-  );
-}
-
-export function List({ list }: List) {
-  return (
-    <main>
-      {/* <Button onClick={handleClick}>add jacket 2</Button> */}
-      <div>
-        <p>Product List</p>
-        <div>
-          {list.map((list) => (
-            <div key={list.slug}>
-              <h2>{list.productName}</h2>
-              <ul>
-                {list.price.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
-              <p>{list.description}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </main>
   );

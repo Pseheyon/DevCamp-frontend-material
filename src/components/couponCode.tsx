@@ -63,60 +63,73 @@ const CouponCodeFrom: React.FC<Props> = ({ form, cartData, setCartData }) => {
     }));
   };
   const handleUseDiscount = () => {
-    if (isButtonClicked) return;
+    if (cartData.paymentAmount.discount !== undefined) {
+      if (isButtonClicked) return;
 
-    const numericValue = cartData.coupon.couponCode;
-    const percent = numericValue ? extractDiscountPercent(numericValue) : 0;
-    const maxPoints = cartData.paymentAmount.total;
+      const numericValue = cartData.coupon.couponCode;
+      const percent = numericValue ? extractDiscountPercent(numericValue) : 0;
+      const maxPoints = cartData.paymentAmount.total;
 
-    let updatedtotal =
-      cartData.paymentAmount.total - maxPoints * (percent * 0.01);
-    if (numericValue !== undefined) {
-      const percent = extractDiscountPercent(numericValue);
-      if (updatedtotal < 1000) {
-        alert("1000원 이하는 사용이 불가능합니다");
-        return;
+      let updatedtotal =
+        cartData.paymentAmount.total - maxPoints * (percent * 0.01);
+      if (numericValue !== undefined) {
+        const percent = extractDiscountPercent(numericValue);
+        if (updatedtotal < 1000) {
+          alert("1000원 이하는 사용이 불가능합니다");
+          return;
+        }
+      } else {
+        alert("실패");
       }
-    } else {
-      alert("실패");
+      // updatedtotal이 0 밑으로 되면 total에 원래의 값 유지
+      const discount = cartData.paymentAmount.total - updatedtotal;
+      const isdiscount = cartData.paymentAmount.discount;
+      const resetcoutn = discount + isdiscount;
+      setIsButtonClicked(true);
+      setIsResetButtonShown(true);
+      const setDiscount = discount;
+      localStorage.setItem("couponCodeDis", `${setDiscount}`);
+      form.setValue("paymentAmount.total", updatedtotal);
+      setCartData((prevCartData) => ({
+        ...prevCartData,
+        paymentAmount: {
+          ...prevCartData.paymentAmount,
+          total: updatedtotal,
+          discount: resetcoutn,
+        },
+      }));
+      console.log("쿠폰코드", cartData.coupon.couponCode);
     }
-    // updatedtotal이 0 밑으로 되면 total에 원래의 값 유지
-
-    setIsButtonClicked(true);
-    setIsResetButtonShown(true);
-
-    form.setValue("paymentAmount.total", updatedtotal);
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: updatedtotal,
-      },
-    }));
-    console.log("쿠폰코드", cartData.coupon.couponCode);
   };
 
   const handleReset = () => {
-    setIsButtonClicked(false);
-    setIsResetButtonShown(false);
-    if (!setIsResetButtonShown) {
-      alert("쿠폰/포인트를 다시 적용해주세요");
-      return;
+    const couponCodeDis = localStorage.getItem("couponCodeDis");
+    if (
+      cartData.paymentAmount.discount !== undefined &&
+      couponCodeDis !== null
+    ) {
+      setIsButtonClicked(false);
+      setIsResetButtonShown(false);
+      if (!setIsResetButtonShown) {
+        alert("쿠폰/포인트를 다시 적용해주세요");
+        return;
+      }
+
+      const updatedtotal = amoutQuantitypay;
+      const discount = cartData.paymentAmount.discount;
+      const setDiscout = discount - parseInt(couponCodeDis);
+      form.setValue("paymentAmount.total", updatedtotal);
+      form.setValue("paymentAmount.discount", 0);
+
+      setCartData((prevCartData) => ({
+        ...prevCartData,
+        paymentAmount: {
+          ...prevCartData.paymentAmount,
+          total: amoutQuantitypay,
+          discount: setDiscout,
+        },
+      }));
     }
-
-    const updatedtotal = amoutQuantitypay;
-
-    form.setValue("paymentAmount.total", updatedtotal);
-    form.setValue("paymentAmount.discount", 0);
-
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      paymentAmount: {
-        ...prevCartData.paymentAmount,
-        total: amoutQuantitypay,
-        discount: 0,
-      },
-    }));
   };
 
   return (

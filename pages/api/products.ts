@@ -11,7 +11,7 @@ export async function getItems() {
   const response = await notion.databases.query({
     database_id: databaseId || "",
   });
-  console.log("어디있는 지 확인", response.results);
+  //console.log("어디있는 지 확인", response.results);
   return response.results.map((page: any) => ({
     id: page.id,
     price:

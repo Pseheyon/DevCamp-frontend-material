@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@notion-render/bookmark-plugin": "^0.0.2",
+    "@notion-render/client": "^0.0.2",
+    "@notion-render/hljs-plugin": "^0.0.2",
     "@notionhq/client": "^2.2.14",
     "@prisma/client": "^5.11.0",
     "@radix-ui/react-checkbox": "^1.0.4",

@@ -33,7 +33,7 @@ import { date } from "zod";
 import CouponCodeFrom from "@/components/couponCode";
 import CouponPointFrom from "@/components/couponPoint";
 import CouponPointUsedFrom from "@/components/couponPointUsed";
-
+import { loadTossPayments } from "@tosspayments/payment-sdk";
 //type TsOrderSchemaType = z.infer<typeof orderSchema>;
 
 export default function Cart() {
@@ -152,46 +152,18 @@ export default function Cart() {
   const amoutQuantitypay =
     cartData.productInfo.price * cartData.productInfo.quantity;
 
-  //포인트사용
-  const handlePointsUsedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const numericValue = parseFloat(e.target.value);
+  const tossClientKey = process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY;
 
-    const minPoints = 5000;
-    const maxPoints = amoutQuantitypay; // 가용한 포인트 상한값
-
-    const clampedValue = Math.max(
-      maxPoints - Math.max(minPoints, numericValue),
-      0
-    );
-
-    setCartData((prevCartData) => ({
-      ...prevCartData,
-      coupon: {
-        ...prevCartData.coupon,
-        couponPoint: clampedValue,
-      },
-    }));
-  };
-
-  // 쿠폰 코드에서 할인 퍼센트를 추출하는 함수
-  const extractDiscountPercent = (code: string) => {
-    const regex = /(\d{1,2})%/;
-    const match = code.match(regex);
-    if (match) {
-      return parseInt(match[1]);
-    } else {
-      return 0;
-    }
-  };
+  if (!tossClientKey) {
+    throw new Error("Toss client key is not defined");
+  }
 
   const user = cartData.user.username;
   const amount = cartData.paymentAmount.total;
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
   const onSubmit = async (data: any) => {
-    const tossPayments = await loadTossPayments(
-      process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
-    );
+    const tossPayments = await loadTossPayments(tossClientKey);
     await tossPayments.requestPayment("카드", {
       amount: amount,
       orderId,

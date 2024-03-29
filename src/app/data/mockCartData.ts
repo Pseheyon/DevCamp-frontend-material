@@ -33,8 +33,8 @@ export const mockCartData: TsOrderSchemaType[] = [
       depositor: "박루미",
     },
     purchaseAgreement: {
-      termsAndConditions: false || "",
-      privacyPolicy: false || "",
+      termsAndConditions: true || "",
+      privacyPolicy: true || "",
     },
   },
 ];

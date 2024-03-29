@@ -92,15 +92,15 @@ export default function Cart() {
     },
   });
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, isSubmitting },
-  //   reset,
-  //   setError,
-  // } = useForm<TsOrderSchemaType>({
-  //   resolver: zodResolver(orderSchema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm<TsOrderSchemaType>({
+    resolver: zodResolver(orderSchema),
+  });
 
   //수량변경
   const handleQuantityChange = (newQuantity: number) => {
@@ -159,7 +159,7 @@ export default function Cart() {
   }
 
   const user = cartData.user.username;
-  const amount = cartData.paymentAmount.total;
+  const amount = cartData.paymentAmount.total + 2500;
   const orderId = Math.random().toString(36).slice(2);
   const orderName = cartData.productInfo.productname;
   const onSubmit = async (data: any) => {
@@ -884,7 +884,8 @@ export default function Cart() {
                         <Checkbox
                           id="terms1"
                           checked={field.value}
-                          onCheckedChange={() => field.onChange(!field.value)}
+                          // onCheckedChange={() => field.onChange(!field.value)}
+                          onCheckedChange={field.onChange}
                           {...field}
                         />
                         <div className="grid gap-1.5 leading-none">
@@ -932,6 +933,7 @@ export default function Cart() {
                 <Button
                   className="flex items-center text-center text-white font-extrabold self-center w-full basis-full"
                   type="submit"
+                  onClick={onSubmit}
                   // onClick={(e) => {
                   //   console.log("확인", date);
                   //   form.handleSubmit(onSubmit)(e);

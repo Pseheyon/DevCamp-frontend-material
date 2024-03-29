@@ -12,9 +12,9 @@ import Link from "next/link";
 
 export default function Page() {
   const [products, setProducts] = useState<Product[]>([]);
-  const url = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
-    fetch(`${url}`)
+    fetch("/api/products")
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);

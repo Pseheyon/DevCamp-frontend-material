@@ -883,10 +883,18 @@ export default function Cart() {
                       <div className="items-top flex space-x-2 mb-4">
                         <Checkbox
                           id="terms1"
-                          checked={field.value}
-                          // onCheckedChange={() => field.onChange(!field.value)}
-                          onCheckedChange={field.onChange}
+                          checked={
+                            typeof field.value === "boolean"
+                              ? field.value
+                              : field.value === "true"
+                          }
+                          onCheckedChange={() => field.onChange(!field.value)}
                           {...field}
+                          value={
+                            typeof field.value === "boolean"
+                              ? String(field.value)
+                              : field.value
+                          }
                         />
                         <div className="grid gap-1.5 leading-none">
                           <label
@@ -909,10 +917,19 @@ export default function Cart() {
                       <FormItem>
                         <div className="items-top flex space-x-2 mb-4">
                           <Checkbox
-                            id="terms1"
-                            checked={field.value}
+                            // id="terms1"
+                            checked={
+                              typeof field.value === "boolean"
+                                ? field.value
+                                : field.value === "true"
+                            }
                             onCheckedChange={() => field.onChange(!field.value)}
                             {...field}
+                            value={
+                              typeof field.value === "boolean"
+                                ? String(field.value)
+                                : field.value
+                            }
                           />
                           <div className="grid gap-1.5 leading-none">
                             <label

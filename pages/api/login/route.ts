@@ -5,6 +5,7 @@ const mockUserData = {
   password: "pw1234!",
   role: "admin",
 };
+
 export async function POST(request: Request) {
   const body: unknown = await request.json();
   const result = loginSchema.safeParse(body);

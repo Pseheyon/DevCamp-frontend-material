@@ -1,4 +1,4 @@
-import { getPageBySlug, notion, getPageContent } from "@/utils/notion";
+import { getPageBySlug, notion, getPageContent } from "@/pages/api/notion";
 import { NotionRenderer } from "@notion-render/client";
 import { notFound } from "next/navigation";
 

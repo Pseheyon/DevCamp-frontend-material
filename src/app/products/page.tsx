@@ -20,7 +20,6 @@ export default function Page() {
 
   return (
     <div className="p-10 cursor-pointer">
-      {/* 상품이 있는 경우에만 렌더링 */}
       {products.map((item) => (
         // 상품명이 존재하면 해당 상품 표시
         <div key={item.slug}>

@@ -41,7 +41,7 @@ export default function Page() {
                           fill
                           alt="Picture of the author"
                           priority
-                          className=" object-cover"
+                          className="object-cover"
                         />
                       </div>
                     </div>

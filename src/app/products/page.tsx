@@ -1,26 +1,38 @@
-"use client";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+
+import type { Metadata } from "next";
+import { getAllProducts } from "@/utils/notion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { GetStaticProps } from "next";
-import { type Product } from "@/interfaces/listProps";
+import { TProductPage, TProduct } from "@/interfaces/ProductIF";
 import Link from "next/link";
+import { ProductList } from "@/components/productList";
 
-export default function Page() {
-  const [products, setProducts] = useState<Product[]>([]);
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+export const metadata: Metadata = {
+  title: "Products",
+};
+
+type Props = {
+  searchParams: { [key: string]: string };
+};
+
+export default async function ProductsPage({ searchParams }: Props) {
+  let allProducts: TProductPage[] | undefined = [];
+  allProducts = await getAllProducts();
+  console.log("allProducts 확인-------------", allProducts[0]?.properties);
+
+  // if (!searchParams) {
+  //   allProducts = await getAllProducts(searchParams.slug);
+  // }
 
   return (
     <div className="p-10 cursor-pointer">
-      {products.map((item) => (
+      {/* {products.map((item) => (
         // 상품명이 존재하면 해당 상품 표시
         <div key={item.slug}>
           {item.productName && (
@@ -72,7 +84,12 @@ export default function Page() {
             </>
           )}
         </div>
-      ))}
+      ))} */}
+
+      <>
+        <ProductList products={allProducts} />
+      </>
+      {/* <>{allProduct ? <ProductList products={allProducts} /> : <>No Posts</>}</> */}
     </div>
   );
 }

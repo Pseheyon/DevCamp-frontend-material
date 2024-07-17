@@ -1,16 +1,10 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { GetStaticProps } from "next";
 
-import { type ListProps } from "@/interfaces/listProps";
+import { type TProduct } from "@/interfaces/ProductIF";
 import Image from "next/image";
 
-interface List {
-  list: ListProps[];
-}
-
-export function Product(props: ListProps) {
+export function Productdetail(props: TProduct) {
   const { productName, description, price, content, productImg, detailImg } =
     props;
   return (
@@ -29,17 +23,17 @@ export function Product(props: ListProps) {
               fill
               alt="Picture of the author"
               priority
-              className=" object-cover object-top"
+              className=" object-cover object-top w-full"
             />
           </div>
           <div className=" basis-5">구매</div>
         </div>
         <ul>{price}</ul>
         <p>{description}</p>
-        <div
+        {/* <div
           className="text-xl mt-4 leading-10 prose prose-p:text-white w-full"
           dangerouslySetInnerHTML={{ __html: content }}
-        ></div>
+        ></div> */}
       </div>
     </main>
   );

@@ -22,12 +22,12 @@ const databaseId = process.env.NOTION_DATABASE_ID!;
 const queryNotionDatabase = async (): Promise<TProductPage[]> => {
   try {
     const response = await notion.databases.query({
-      // filter: {
-      //   property: "status",
-      //   select: {
-      //     equals: "published",
-      //   },
-      // },
+      filter: {
+        property: "status",
+        select: {
+          equals: "published",
+        },
+      },
       database_id: databaseId,
     });
     //console.log("응답----------------------", response);

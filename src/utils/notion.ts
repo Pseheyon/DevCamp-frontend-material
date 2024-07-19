@@ -26,7 +26,7 @@ const queryNotionDatabase = async (): Promise<TProductPage[]> => {
       //     equals: "published",
       //   },
       // },
-      database_id: process.env.NOTION_DATABASE_ID!,
+      database_id: databaseId,
     });
     //console.log("응답----------------------", response);
     return response.results as (DatabaseObjectResponse & TProductPage)[];

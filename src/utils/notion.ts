@@ -32,7 +32,7 @@ const queryNotionDatabase = async (): Promise<TProductPage[]> => {
     return response.results as (DatabaseObjectResponse & TProductPage)[];
   } catch (error) {
     // console.error("Error occurred while fetching pages:", error);
-    throw new Error("쿼리노션데이터베이스에러.");
+    throw new Error(`쿼리노션데이터베이스에러.${error}`);
   }
 };
 

@@ -10,12 +10,10 @@ import { NotionRenderer } from "@notion-render/client";
 import hljsPlugin from "@notion-render/hljs-plugin";
 import { cache } from "react";
 import { TProductPage, TProduct } from "@/interfaces/ProductIF";
-const notionSecret = process.env.NOTION_TOKEN;
-const notionDatabaseId = process.env.NOTION_DATABASE_ID;
+const notionSecret = process.env.NEXT_PUBLIC_NOTION_TOKEN;
+const databaseId = process.env.NEXT_PUBLIC_NOTION_DATABASE_ID!;
 
 export const notion = new Client({ auth: notionSecret });
-
-const databaseId = process.env.NOTION_DATABASE_ID!;
 
 const queryNotionDatabase = async (): Promise<TProductPage[]> => {
   try {

@@ -40,7 +40,7 @@ export const getAllProducts = async (): Promise<TProductPage[]> => {
   try {
     return await queryNotionDatabase();
   } catch (error) {
-    throw new Error("제품을 불러오는데 실패했습니다.");
+    throw new Error(`제품을 불러오는데 실패했습니다.${error}`);
   }
 };
 

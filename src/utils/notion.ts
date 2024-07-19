@@ -20,13 +20,13 @@ const databaseId = process.env.NOTION_DATABASE_ID!;
 const queryNotionDatabase = async (): Promise<TProductPage[]> => {
   try {
     const response = await notion.databases.query({
-      database_id: databaseId,
       // filter: {
-      //   property: "slug",
-      //   rich_text: {
-      //     equals: "slug",
+      //   property: "status",
+      //   select: {
+      //     equals: "published",
       //   },
       // },
+      database_id: process.env.NOTION_DATABASE_ID!,
     });
     //console.log("응답----------------------", response);
     return response.results as (DatabaseObjectResponse & TProductPage)[];

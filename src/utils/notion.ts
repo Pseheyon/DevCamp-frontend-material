@@ -13,7 +13,9 @@ import { TProductPage, TProduct } from "@/interfaces/ProductIF";
 const notionSecret = process.env.NOTION_TOKEN;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
 
-export const notion = new Client({ auth: notionSecret });
+export const notion = new Client({
+  auth: "secret_zFWPNbQisqv4qVb59qPMVROEusPjRYcl0RKcgT1xChm",
+});
 
 const databaseId = process.env.NOTION_DATABASE_ID!;
 

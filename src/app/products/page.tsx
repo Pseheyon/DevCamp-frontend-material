@@ -32,7 +32,8 @@ export default async function ProductsPage({ searchParams }: Props) {
 
   return (
     <div className="p-10 cursor-pointer">
-      {/* {products.map((item) => (
+      <>
+        {/* {products.map((item) => (
         // 상품명이 존재하면 해당 상품 표시
         <div key={item.slug}>
           {item.productName && (
@@ -85,7 +86,7 @@ export default async function ProductsPage({ searchParams }: Props) {
           )}
         </div>
       ))} */}
-
+      </>
       <>
         <ProductList products={allProducts} />
       </>

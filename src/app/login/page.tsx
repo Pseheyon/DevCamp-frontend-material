@@ -32,6 +32,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+
 export default function LoginForm() {
   const form = useForm<TsLoginSchemaType>({
     resolver: zodResolver(loginSchema),
@@ -51,10 +52,11 @@ export default function LoginForm() {
   } = useForm<TsLoginSchemaType>({
     resolver: zodResolver(loginSchema),
   });
+  const publicApi = process.env.NEXT_PUBLIC_API_URL;
 
   const onSubmit = async (data: TsLoginSchemaType) => {
     alert(JSON.stringify(data, null, 4));
-    const response = await fetch("/pages/api/login", {
+    const response = await fetch(`${publicApi}/api/login`, {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -71,6 +73,9 @@ export default function LoginForm() {
       const errors = responseData.errors;
       alert("사용자 정보가 없습니다.");
       return;
+    }
+    if (!response.ok) {
+      console.log(`--------------------로그인에러,${errors}`);
     }
     if (response.ok) {
       alert("로그인에 성공했습니다!");

@@ -11,12 +11,18 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { Button } from "./ui/button";
+
+if (typeof window !== "undefined") {
+  const admin = localStorage.getItem("adminName");
+}
 
 export const ProductItem = ({
   productName,
   price,
   productImg,
   slug,
+  postBy,
 }: // description,
 // content,
 // detailImg,
@@ -24,12 +30,15 @@ TProduct) => {
   return (
     <>
       {productName && (
-        <main className="w-full flex items-center justify-center">
-          <>
-            <Link href={`/products/${slug}`}>
+        <main className="w-90vw flex items-center justify-center">
+          <div className="w-full  h-[200px] mb-10 justify-center flex-row relative">
+            <Link
+              href={`/products/${slug}`}
+              className="w-full  h-[200px] mb-10 justify-center flex-row"
+            >
               <ResizablePanelGroup
                 direction="horizontal"
-                className=" rounded-lg border h-[200px] "
+                className="rounded-lg border"
               >
                 <ResizablePanel
                   defaultSize={10}
@@ -54,8 +63,9 @@ TProduct) => {
                       <div className=" p-1">
                         <span className="font-semibold">
                           <p>상품명: {productName}</p>
+                          <p>작성자: {postBy}</p>
 
-                          {productName}
+                          {postBy}
                         </span>
                       </div>
                     </ResizablePanel>
@@ -69,8 +79,16 @@ TProduct) => {
                 </ResizablePanel>
               </ResizablePanelGroup>
             </Link>
-            <br />
-          </>
+            <div className=" absolute bottom-1 right-1">
+              {postBy ? (
+                <Link href={`/admin/${slug}`}>
+                  <Button>{postBy}수정</Button>{" "}
+                </Link>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
         </main>
       )}
     </>

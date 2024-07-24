@@ -58,6 +58,7 @@ import { ProductItem } from "@/components/productItem";
 import { NotionRenderer } from "@notion-render/client";
 import { Productdetail } from "@/components/Productdetail";
 import { Product } from "@/components/Product";
+
 type Props = {
   params: { slug: string };
 };
@@ -81,17 +82,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
   console.log("list-------------------------: ", list?.id);
 
   const content = await getPageContent(list?.id);
-  console.log("List-------------------------: ", list.id);
-  console.log("content-------------------------: ", content);
+
   const html = await renderPageContent(content!);
-
-  // const notionRenderer = new NotionRenderer({
-  //   client: notion,
-  // });
-
-  // notionRenderer.use(hljsPlugin({}));
-  // notionRenderer.use(bookmarkPlugin(undefined));
-  // const html = await notionRenderer.render(...content);
 
   console.log("list: zzzzzzzzzzzzzzzzzzzzzzzzzzzzz", html);
 

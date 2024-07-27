@@ -4,9 +4,9 @@ import { TProductPage, TProduct } from "@/interfaces/ProductIF";
 import { ProductItem } from "@/components/productItem";
 
 export const ProductList = ({ products }: { products: TProductPage[] }) => {
-  if (products.length === 0) {
-    return <div>Coming soon...</div>;
-  }
+  // if (products.length === 0) {
+  //   return <div>Coming soon...</div>;
+  // }
   return (
     <>
       {products.map((item) => (
@@ -17,6 +17,7 @@ export const ProductList = ({ products }: { products: TProductPage[] }) => {
               item.properties.productName?.title[0]?.plain_text ?? ""
             }
             slug={item.properties?.slug?.rich_text[0]?.plain_text ?? ""}
+            postBy={item.properties?.postBy?.rich_text[0]?.plain_text ?? ""}
             description={
               item.properties?.description?.rich_text[0]?.plain_text ?? ""
             }

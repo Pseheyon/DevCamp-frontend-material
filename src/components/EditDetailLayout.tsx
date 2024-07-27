@@ -75,17 +75,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: description,
   };
 }
-export default async function Page({ params }: { params: { slug: string } }) {
-  //Redirect to not found page!
-  //if (!list) notFound();
-  const list = await getPageBySlug(params.slug);
-  console.log("list-------------------------: ", list?.id);
+export default async function DetailLayout({
+  params,
+}: {
+  params: { postBy: string };
+}) {
+  const list = await getPageBySlug(params.postBy);
 
   const content = await getPageContent(list?.id);
-
   const html = await renderPageContent(content!);
-
-  console.log("list: zzzzzzzzzzzzzzzzzzzzzzzzzzzzz", html);
 
   return (
     <div className="w-[1280px] ">

@@ -25,6 +25,7 @@ export const ProductItem = ({
   productImg,
   slug,
   postBy,
+  postBy,
 }: // description,
 // content,
 // detailImg,
@@ -40,6 +41,7 @@ TProduct) => {
             >
               <ResizablePanelGroup
                 direction="horizontal"
+                className="rounded-lg border"
                 className="rounded-lg border"
               >
                 <ResizablePanel
@@ -66,7 +68,6 @@ TProduct) => {
                         <span className="font-semibold">
                           <p>상품명: {productName}</p>
                           <p>작성자: {postBy}</p>
-
                           {postBy}
                         </span>
                       </div>

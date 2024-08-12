@@ -25,7 +25,6 @@ export const ProductItem = ({
   productImg,
   slug,
   postBy,
-  postBy,
 }: // description,
 // content,
 // detailImg,
@@ -41,7 +40,6 @@ TProduct) => {
             >
               <ResizablePanelGroup
                 direction="horizontal"
-                className="rounded-lg border"
                 className="rounded-lg border"
               >
                 <ResizablePanel

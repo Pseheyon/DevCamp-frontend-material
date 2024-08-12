@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { TsOrderSchemaType, orderSchema } from "@/validators/cartSchema";
 import { mockCartData } from "@/app/data/mockCartData";
 

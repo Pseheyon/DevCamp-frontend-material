@@ -13,10 +13,6 @@ import { TProductPage, TProduct } from "@/interfaces/ProductIF";
 import Link from "next/link";
 import { ProductList } from "@/components/productList";
 
-export const metadata: Metadata = {
-  title: "Products",
-};
-
 type Props = {
   searchParams: { [key: string]: string };
 };

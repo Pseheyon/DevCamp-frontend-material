@@ -1,21 +1,27 @@
 import { loginSchema } from "@/validators/loginSchema";
 import { NextResponse } from "next/server";
+import { sign } from "jsonwebtoken";
+
 const mockUserData = {
-  email: "user@example.com",
+  email: "seller@example.com",
   password: "pw1234!",
   role: "admin",
 };
 
-export async function POST(request: Request) {
-  const body: unknown = await request.json();
-  const result = loginSchema.safeParse(body);
+const JWT_SECRET = process.env.NEXTAUTH_SECRET!;
+if (!JWT_SECRET) {
+  throw new Error("JWT_SECRET 환경 변수가 설정되지 않았습니다.");
+}
 
-  let zodErrors = {};
+export async function POST(request: Request) {
+  const body = await request.json();
+  const result = loginSchema.safeParse(body);
+  let zodErrors: Record<string, string> = {};
+
   if (!result.success) {
-    const error = result.error.issues.forEach((issue) => {
+    result.error.issues.forEach((issue) => {
       zodErrors = { ...zodErrors, [issue.path[0]]: issue.message };
     });
-    console.log(`--------------------로그인에러,${error}`);
   } else {
     const { email, password, role } = result.data;
 
@@ -29,6 +35,22 @@ export async function POST(request: Request) {
       zodErrors = {
         authentication: "사용자 정보가 없습니다.",
       };
+    } else {
+      const postBy = email.split("@")[0]; // 이메일 주소에서 도메인 부분을 제거
+      let token: string;
+      try {
+        token = sign(
+          { email: existingUser.email, role: existingUser.role, postBy },
+          JWT_SECRET,
+          { expiresIn: "1h" }
+        );
+      } catch (error) {
+        console.error("JWT 생성 중 오류 발생:", error);
+        return NextResponse.json({
+          errors: { jwt: "JWT 생성 중 오류가 발생했습니다." },
+        });
+      }
+      return NextResponse.json({ token });
     }
   }
 
